@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlanetSpawner : MonoBehaviour
@@ -6,8 +7,7 @@ public class PlanetSpawner : MonoBehaviour
     private Camera playerCamera;
     public GameObject planetPrefab; // Assign your planet prefab in the inspector
     public int numberOfPlanets = 10; // Number of planets to spawn
-    public float spawnRadius = 500f; // Radius around the player to spawn planets
-    public float spawnDistance = 100f;
+    public float spawnDistance = 500f;
     public float minSize = .5f;
     public float maxSize = 30f;
     public float checkInterval = 1f;
@@ -41,7 +41,8 @@ public class PlanetSpawner : MonoBehaviour
         // Get the planes of the camera's frustum
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(playerCamera);
         Collider[] colliders = FindObjectsOfType<Collider>(); // Get all colliders in the scene
-
+        Debug.Log(colliders.Length);
+        Debug.Log(colliders);
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("Planet")) // Ensure the collider is a planet
@@ -60,12 +61,12 @@ public class PlanetSpawner : MonoBehaviour
         for (int i = 0; i < numberOfPlanets; i++)
         {
             // Generate a random direction on the surface of a sphere
-            Vector3 randomDirection = Random.onUnitSphere;
+            Vector3 randomDirection = Random.onUnitSphere * spawnDistance;
 
             Vector3 spawnPosition = transform.position + playerCamera.transform.forward * spawnDistance;
 
             // Offset the spawn position by a random direction on the sphere's surface
-            Vector3 randomPosition = spawnPosition + randomDirection * spawnRadius;
+            Vector3 randomPosition = spawnPosition + randomDirection;
 
             // Instantiate the planet prefab
             GameObject planet = Instantiate(planetPrefab, randomPosition, Random.rotation);
