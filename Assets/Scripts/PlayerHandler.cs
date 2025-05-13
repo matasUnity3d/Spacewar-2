@@ -18,7 +18,6 @@ public class PlayerHandler : MonoBehaviour
         float VelocityZ = Input.GetAxis("Vertical");
 
         Vector3 ForceDirection = transform.TransformDirection(new Vector3(VelocityX, VelocityY, VelocityZ) * multiplier);
-        Debug.Log(ForceDirection);
         Force.force = ForceDirection;
     }
 }
