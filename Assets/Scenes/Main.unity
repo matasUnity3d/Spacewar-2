@@ -30147,7 +30147,7 @@ MonoBehaviour:
   yawRight: {fileID: 1323795892}
   pitchLimit: 360
   mapCenter: {x: 0, y: 0, z: 0}
-  mapDimensions: {x: 1000, y: 1000, z: 1000}
+  mapDimensions: {x: 10000, y: 10000, z: 10000}
 --- !u!75 &1511663292
 ConstantForce:
   m_ObjectHideFlags: 0
