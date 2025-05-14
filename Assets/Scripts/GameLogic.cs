@@ -6,7 +6,7 @@ public class PlanetSpawner : MonoBehaviour
 {
     private Camera playerCamera;
     public GameObject planetPrefab; // Assign your planet prefab in the inspector
-    public int numberOfPlanets = 10; // Number of planets to spawn
+    public int numberOfPlanets = 100; // Number of planets to spawn
     public float spawnDistance = 500f;
     public float minSize = .5f;
     public float maxSize = 30f;
