@@ -7,6 +7,8 @@ public class PlayerScript : MonoBehaviour
     public TextMeshProUGUI planetsSmashedLabel; // Reference to the UI Text element that displays the number of smashed planets
     private int planetsSmashed = 0; // Counter for smashed planets
 
+    [SerializeField]
+    public PlayerHandler playerHandler;
     private void Start()
     {
         // Initialize the label
@@ -20,7 +22,6 @@ public class PlayerScript : MonoBehaviour
         {
             // Increase the planets smashed count
             planetsSmashed++;
-
             // Update the UI label
             UpdatePlanetsSmashedLabel();
 
@@ -33,5 +34,6 @@ public class PlayerScript : MonoBehaviour
     {
         // Update the text of the label to show the current count
         planetsSmashedLabel.text = "Planets Smashed: " + planetsSmashed;
+        playerHandler.SetFuel(100f, true);
     }
 }

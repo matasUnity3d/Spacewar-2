@@ -14,24 +14,29 @@ public class PlayerHandler : MonoBehaviour
     public ParticleSystem down;
     public ParticleSystem yawLeft;
     public ParticleSystem yawRight;
+    public ParticleSystem timeWarp;
+    public float Fuel, MaxFuel;
+    public float fuelDrain = -0.5f;
+    public bool moving = false;
+    public Camera myCamera;
+    private bool hasFuel = true;
+    [SerializeField]
+    private FuelUI fuel;
 
     private float yaw; // Yaw rotation based on mouse movement
     private float pitch; // Pitch rotation based on mouse movement
     public float pitchLimit = 360f; // Limit for pitch rotation
-
+    private float fov = 90;
+    private float t = 0.5f;
     // Define the map boundaries
     public Vector3 mapCenter = Vector3.zero; // Center of the map
     public Vector3 mapDimensions = new Vector3(1000f, 1000f, 1000f); // Size of the map
 
     void Start()
     {
+        DisableEmissions();
+        fuel.SetMaxFuel(MaxFuel);
         Force = GetComponent<ConstantForce>();
-        fwd.enableEmission = false;
-        back.enableEmission = false;
-        left.enableEmission = false;
-        right.enableEmission = false;
-        down.enableEmission = false;
-        up.enableEmission = false;
 
         // Lock the cursor to the center of the screen
         Cursor.lockState = CursorLockMode.Locked;
@@ -40,35 +45,42 @@ public class PlayerHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetEmission("w", fwd);
-        SetEmission("s", back);
-        SetEmission(KeyCode.A, left);
-        SetEmission(KeyCode.D, right);
-        SetEmission(KeyCode.LeftControl, down);
-        SetEmission(KeyCode.LeftShift, up);
+        if(hasFuel){
+            TimeWarp();
+            SetFuel(fuelDrain, false);
+            SetEmission(KeyCode.W, fwd);
+            SetEmission(KeyCode.S, back);
+            SetEmission(KeyCode.A, left);
+            SetEmission(KeyCode.D, right);
+            SetEmission(KeyCode.LeftControl, down);
+            SetEmission(KeyCode.LeftShift, up);
+            // Mouse-based turning
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+            yaw += mouseX; // Update yaw based on mouse movement
+            pitch -= mouseY; // Update pitch based on mouse movement
+            // pitch = Mathf.Clamp(pitch, -pitchLimit, pitchLimit); // Uncomment if you want to clamp pitch
 
-        // Mouse-based turning
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+            // Apply rotation
+            transform.eulerAngles = new Vector3(pitch, yaw, 0);
 
-        yaw += mouseX; // Update yaw based on mouse movement
-        pitch -= mouseY; // Update pitch based on mouse movement
-        // pitch = Mathf.Clamp(pitch, -pitchLimit, pitchLimit); // Uncomment if you want to clamp pitch
+            // Emission based on mouse movement
+            yawLeft.enableEmission = mouseX != 0;
+            yawRight.enableEmission = mouseY != 0;
 
-        // Apply rotation
-        transform.eulerAngles = new Vector3(pitch, yaw, 0);
+            // Movement input
+            float VelocityX = Input.GetAxis("Horizontal");
+            float VelocityY = Input.GetKey(KeyCode.LeftShift) ? 1f : Input.GetKey(KeyCode.LeftControl) ? -1f : 0f;
+            float VelocityZ = Input.GetAxis("Vertical");
+            SetMovement(VelocityX, VelocityY, VelocityZ);
 
-        // Emission based on mouse movement
-        yawLeft.enableEmission = mouseX != 0;
-        yawRight.enableEmission = mouseY != 0;
-
-        // Movement input
-        float VelocityX = Input.GetAxis("Horizontal");
-        float VelocityY = Input.GetKey(KeyCode.LeftShift) ? 1f : Input.GetKey(KeyCode.LeftControl) ? -1f : 0f;
-        float VelocityZ = Input.GetAxis("Vertical");
-        Vector3 ForceDirection = transform.TransformDirection(new Vector3(VelocityX, VelocityY, VelocityZ) * multiplier);
-        Force.force = ForceDirection;
-
+            moving = IsAnyMovementKeyPressed();
+        }
+        else{
+            moving = false;
+            DisableEmissions();
+            SetMovement(0, 0, 0);
+        }
         // Check for map borders
         CheckMapBorders();
     }
@@ -91,17 +103,70 @@ public class PlayerHandler : MonoBehaviour
         transform.position = position;
     }
 
-    void SetEmission(string key, ParticleSystem particleSystem)
-    {
-        var emission = particleSystem.emission;
-        if (Input.GetKeyDown(key)) emission.enabled = true;
-        if (Input.GetKeyUp(key)) emission.enabled = false;
-    }
-
     void SetEmission(KeyCode key, ParticleSystem particleSystem)
     {
         var emission = particleSystem.emission;
-        if (Input.GetKeyDown(key)) emission.enabled = true;
-        if (Input.GetKeyUp(key)) emission.enabled = false;
+        if (Input.GetKeyDown(key)){
+            if(key == KeyCode.W){
+                fov = 115f;
+                timeWarp.enableEmission = true;
+            }
+            emission.enabled = true;
+        }
+        if (Input.GetKeyUp(key)){
+            if(key == KeyCode.W){
+                fov = 90f;
+                timeWarp.enableEmission = false;
+            }
+            emission.enabled = false;
+        }
+    }
+    // Update is needed because you can collide with planets without boosting, thus not updating the fuel
+    // Only Planet smasher calls this with true
+    public void SetFuel(float fuelChange, bool update){
+        Debug.Log("Fuel before: " + Fuel);
+        if(moving || update){
+            if((fuelChange + Fuel) >= MaxFuel){
+                Fuel=MaxFuel;
+            }
+            else {
+                Fuel += fuelChange;
+                Fuel = Mathf.Clamp(Fuel, 0, MaxFuel);
+            }
+            Debug.Log("Moving");
+            fuel.SetFuel(Fuel);
+        }
+        if(Fuel == 0){
+            hasFuel = false;
+        }
+        Debug.Log("Fuel after: " + Fuel);
+    }
+    void DisableEmissions(){
+        timeWarp.enableEmission = false;
+        fwd.enableEmission = false;
+        back.enableEmission = false;
+        left.enableEmission = false;
+        right.enableEmission = false;
+        down.enableEmission = false;
+        up.enableEmission = false;
+    }
+
+    void SetMovement(float x, float y, float z){
+        Vector3 ForceDirection = transform.TransformDirection(new Vector3(x, y, z) * multiplier);
+        Force.force = ForceDirection;
+    }
+    bool IsAnyMovementKeyPressed()
+    {
+        return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || 
+            Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftShift);
+    }
+    void TimeWarp()
+    {
+        if(fov == 115 && myCamera.fieldOfView != fov){
+            myCamera.fieldOfView += t;
+        }
+        else if (fov == 90 && myCamera.fieldOfView != fov){
+            myCamera.fieldOfView -= t;
+        }
     }
 }

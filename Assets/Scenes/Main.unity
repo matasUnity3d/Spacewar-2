@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 312000977}
   - component: {fileID: 312000976}
   - component: {fileID: 312000975}
+  - component: {fileID: 312000979}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: Untagged
@@ -502,6 +503,7 @@ RectTransform:
   - {fileID: 1427066529}
   - {fileID: 1602172887}
   - {fileID: 276590480}
+  - {fileID: 933175115}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -509,6 +511,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &312000979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312000974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba12ff8f959b4129ac28584586aa75f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlsLabel: {fileID: 242974595}
 --- !u!1 &603980897
 GameObject:
   m_ObjectHideFlags: 0
@@ -5512,6 +5527,99 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!1 &933175114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 933175115}
+  - component: {fileID: 933175118}
+  - component: {fileID: 933175117}
+  - component: {fileID: 933175116}
+  m_Layer: 5
+  m_Name: Fuel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &933175115
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933175114}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 312000978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 189.8, y: -40.7}
+  m_SizeDelta: {x: 310, y: 25}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &933175116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933175114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68faf151b6c94e6b84ee79f5c40205a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Fuel: 0
+  MaxFuel: 0
+  Width: 0
+  Height: 0
+  fuelBar: {fileID: 0}
+--- !u!114 &933175117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933175114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &933175118
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933175114}
+  m_CullTransparentMesh: 1
 --- !u!1001 &956137945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30145,6 +30253,11 @@ MonoBehaviour:
   down: {fileID: 1165773979}
   yawLeft: {fileID: 1432644481}
   yawRight: {fileID: 1323795892}
+  Fuel: 0
+  MaxFuel: 0
+  fuelChange: 0.1
+  moving: 0
+  fuel: {fileID: 0}
   pitchLimit: 360
   mapCenter: {x: 0, y: 0, z: 0}
   mapDimensions: {x: 10000, y: 10000, z: 10000}
@@ -30596,7 +30709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1511663288}
-  baseAttractionForce: 100000
+  baseAttractionForce: 1000
   deathDistance: 1
 --- !u!1001 &1917378102
 PrefabInstance:
