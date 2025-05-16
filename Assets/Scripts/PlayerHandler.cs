@@ -16,7 +16,7 @@ public class PlayerHandler : MonoBehaviour
     public ParticleSystem yawRight;
     public ParticleSystem timeWarp;
     public float Fuel, MaxFuel;
-    public float fuelDrain = -0.5f;
+    public float fuelDrain = -10000f;
     public bool moving = false;
     public Camera myCamera;
     private bool hasFuel = true;
@@ -31,13 +31,17 @@ public class PlayerHandler : MonoBehaviour
     // Define the map boundaries
     public Vector3 mapCenter = Vector3.zero; // Center of the map
     public Vector3 mapDimensions = new Vector3(1000f, 1000f, 1000f); // Size of the map
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     void Start()
     {
         DisableEmissions();
         fuel.SetMaxFuel(MaxFuel);
         Force = GetComponent<ConstantForce>();
-
         // Lock the cursor to the center of the screen
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -45,7 +49,8 @@ public class PlayerHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(hasFuel){
+        if (hasFuel)
+        {
             TimeWarp();
             SetFuel(fuelDrain, false);
             SetEmission(KeyCode.W, fwd);
@@ -75,8 +80,14 @@ public class PlayerHandler : MonoBehaviour
             SetMovement(VelocityX, VelocityY, VelocityZ);
 
             moving = IsAnyMovementKeyPressed();
+            if (moving)
+            {
+                //audioManager.PlaySFX(audioManager.Boost);
+            }
         }
-        else{
+        else
+        {
+            audioManager.PlaySFX(audioManager.FuelUp);
             moving = false;
             DisableEmissions();
             SetMovement(0, 0, 0);
@@ -101,6 +112,15 @@ public class PlayerHandler : MonoBehaviour
 
         // Update the player's position
         transform.position = position;
+    }
+
+    public void SetHasFuel(bool fuel)
+    {
+        hasFuel = fuel;
+    }
+    public void SetFov(float newFov)
+    {
+        myCamera.fieldOfView = newFov;
     }
 
     void SetEmission(KeyCode key, ParticleSystem particleSystem)
@@ -131,7 +151,7 @@ public class PlayerHandler : MonoBehaviour
             }
             else {
                 Fuel += fuelChange;
-                Fuel = Mathf.Clamp(Fuel, 0, MaxFuel);
+                //Fuel = Mathf.Clamp(Fuel, 0, MaxFuel);
             }
             Debug.Log("Moving");
             fuel.SetFuel(Fuel);
@@ -151,7 +171,7 @@ public class PlayerHandler : MonoBehaviour
         up.enableEmission = false;
     }
 
-    void SetMovement(float x, float y, float z){
+    public void SetMovement(float x, float y, float z){
         Vector3 ForceDirection = transform.TransformDirection(new Vector3(x, y, z) * multiplier);
         Force.force = ForceDirection;
     }

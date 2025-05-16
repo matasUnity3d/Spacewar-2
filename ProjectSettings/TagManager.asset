@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Particle
   - Planet
+  - Audio
   layers:
   - Default
   - TransparentFX
