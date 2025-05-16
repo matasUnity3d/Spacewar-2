@@ -22,7 +22,6 @@ public class PlayerHandler : MonoBehaviour
     private bool hasFuel = true;
     [SerializeField]
     private FuelUI fuel;
-
     private float yaw; // Yaw rotation based on mouse movement
     private float pitch; // Pitch rotation based on mouse movement
     public float pitchLimit = 360f; // Limit for pitch rotation

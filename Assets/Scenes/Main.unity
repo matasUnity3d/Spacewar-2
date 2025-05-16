@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 9f680bcd0c4d62a4a87e0346de1bf675, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 95ebf50189f880e4aa17c4fdba9007aa, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -5639,6 +5639,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4769838042387905325, guid: 4c5300ddad26a5849bfa5adbbdd57783, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4769838042387905325, guid: 4c5300ddad26a5849bfa5adbbdd57783, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: fc1b910829b294fa68e0075c260e5649, type: 2}
     - target: {fileID: 8287078006686517996, guid: 4c5300ddad26a5849bfa5adbbdd57783, type: 3}
       propertyPath: m_LocalScale.x
       value: 9.923033
@@ -36281,7 +36289,7 @@ MonoBehaviour:
   deathScreen: {fileID: 1935117459}
   mainUI: {fileID: 312000977}
   HighScoreLabel: {fileID: 1913635543}
-  baseAttractionForce: 1000
+  baseAttractionForce: 10000
   deathDistance: 1
   playerHandler: {fileID: 1511663291}
   planetSmash: {fileID: 1511663297}

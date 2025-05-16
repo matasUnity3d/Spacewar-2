@@ -89,7 +89,6 @@ public class Attraction : MonoBehaviour
             fighter.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             position = player.transform.position;
             player.SetActive(false);
-            Instantiate(explosion, position, Quaternion.identity);
             playerHandler.SetHasFuel(false);
             died = true;
         }

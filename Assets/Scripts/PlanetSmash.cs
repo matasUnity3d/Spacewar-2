@@ -44,7 +44,8 @@ public class PlanetSmash : MonoBehaviour
             position = collision.gameObject.transform.position;
             // Destroy the planet
             Destroy(collision.gameObject);
-            Instantiate(explosion, position, Quaternion.identity);
+            GameObject clone = Instantiate(explosion, position, Quaternion.identity);// as GameObject;
+            Destroy(clone, 5);
         }
         else
         {
