@@ -38,6 +38,7 @@ public class PlayerHandler : MonoBehaviour
 
     void Start()
     {
+        fuelDrain /= 100;
         DisableEmissions();
         fuel.SetMaxFuel(MaxFuel);
         Force = GetComponent<ConstantForce>();
@@ -155,7 +156,7 @@ public class PlayerHandler : MonoBehaviour
             Debug.Log("Moving");
             fuel.SetFuel(Fuel);
         }
-        if(Fuel == 0){
+        if(Fuel <= 0){
             hasFuel = false;
         }
         Debug.Log("Fuel after: " + Fuel);

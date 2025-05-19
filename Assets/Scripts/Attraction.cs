@@ -13,6 +13,8 @@ public class Attraction : MonoBehaviour
     public TextMeshProUGUI HighScoreLabel;
     public float baseAttractionForce = 100000f; // Base force of attraction
     public float deathDistance = 1f; // Distance at which the player dies
+    public Camera mainCamera;
+    public Camera deathCamera;
     private bool died = false;
 
     [SerializeField]
@@ -25,6 +27,8 @@ public class Attraction : MonoBehaviour
     }
     private void Start()
     {
+        mainCamera.enabled = true;
+        deathCamera.enabled = false;
         deathDistance = 90f;
         deathScreen.enabled = false;
         mainUI.enabled = true;
@@ -82,6 +86,8 @@ public class Attraction : MonoBehaviour
             }
             mainUI.enabled = false;
             deathScreen.enabled = true;
+            mainCamera.enabled = false;
+            deathCamera.enabled = true;
             playerHandler.SetFov(150f);
             fighter = GameObject.Find("Fighter_01");
             Debug.Log("Smash sun");
