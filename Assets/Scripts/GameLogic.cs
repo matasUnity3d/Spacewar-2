@@ -2,20 +2,26 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlanetSpawner : MonoBehaviour
+public class GameLogic : MonoBehaviour
 {
     private Camera playerCamera;
-    public GameObject planetPrefab; // Assign your planet prefab in the inspector
-    public int numberOfPlanets = 100; // Number of planets to spawn
+    public GameObject planetPrefab;
+    public int numberOfPlanets = 100;
     public float spawnDistance = 500f;
     public float minSize = .5f;
     public float maxSize = 30f;
     public float checkInterval = 1f;
+
+    public GameObject enemyPrefab; 
+    public int numberOfEnemies = 10;
+    public Vector3 enemySpawnPosition = Vector3.zero;
+
     void Start()
     {
         Physics.gravity = Vector3.zero;
-        playerCamera = Camera.main; // Get the main camera
+        playerCamera = Camera.main;
         SpawnPlanets();
+        SpawnEnemies();
         StartCoroutine(CheckAndSpawnPlanets());
     }
 
@@ -24,10 +30,9 @@ public class PlanetSpawner : MonoBehaviour
         while (true) // Infinite loop to keep checking
         {
             SpawnPlanetsIfNeeded();
-            yield return new WaitForSeconds(checkInterval); // Wait for the specified interval
+            yield return new WaitForSeconds(checkInterval);
         }
     }
-
 
     void SpawnPlanetsIfNeeded()
     {
@@ -36,46 +41,39 @@ public class PlanetSpawner : MonoBehaviour
             SpawnPlanets();
         }
     }
+
     bool AreAnyPlanetsVisible()
     {
         // Get the planes of the camera's frustum
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(playerCamera);
-        Collider[] colliders = FindObjectsOfType<Collider>(); // Get all colliders in the scene
+        Collider[] colliders = FindObjectsOfType<Collider>();
         Debug.Log(colliders.Length);
         Debug.Log(colliders);
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Planet")) // Ensure the collider is a planet
+            if (collider.CompareTag("Planet"))
             {
                 if (GeometryUtility.TestPlanesAABB(planes, collider.bounds))
                 {
-                    return true; // A planet is visible
+                    return true;
                 }
             }
         }
-        return false; // No planets are visible
+        return false;
     }
 
     void SpawnPlanets()
     {
         for (int i = 0; i < numberOfPlanets; i++)
         {
-            // Generate a random direction on the surface of a sphere
             Vector3 randomDirection = Random.onUnitSphere * spawnDistance;
 
             Vector3 spawnPosition = transform.position + playerCamera.transform.forward * spawnDistance;
 
-            // Offset the spawn position by a random direction on the sphere's surface
             Vector3 randomPosition = spawnPosition + randomDirection;
 
-            // Instantiate the planet prefab
             GameObject planet = Instantiate(planetPrefab, randomPosition, Random.rotation);
 
-            // Randomize the size of the planet
-            float randomSize = Random.Range(minSize, maxSize); // Adjust size range as needed
-            planet.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
-
-            // Randomize the color of the planet's material
             Renderer planetRenderer = planet.GetComponent<Renderer>();
             if (planetRenderer != null)
             {
@@ -83,8 +81,32 @@ public class PlanetSpawner : MonoBehaviour
                 planetRenderer.material.color = randomColor;
             }
 
-            // Tag the planet for visibility checking
             planet.tag = "Planet";
+        }
+    }
+
+    void SpawnEnemies()
+    {
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            Vector3 randomDirection = Random.onUnitSphere * spawnDistance;
+
+            Vector3 spawnPosition = transform.position + playerCamera.transform.forward * spawnDistance;
+
+            Vector3 randomPosition = spawnPosition + randomDirection;
+
+            GameObject enemy = Instantiate(enemyPrefab, randomPosition, Random.rotation);
+
+            float randomSize = Random.Range(minSize, maxSize);
+            enemy.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+
+            Renderer enemyRenderer = enemy.GetComponent<Renderer>();
+            if (enemyRenderer != null)
+            {
+                Color randomColor = new Color(Random.value, Random.value, Random.value);
+                enemyRenderer.material.color = randomColor;
+            }
+            enemy.tag = "Enemy"; 
         }
     }
 }
