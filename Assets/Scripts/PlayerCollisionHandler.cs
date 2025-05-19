@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI; // Make sure to include this for UI elements
 using System.Collections.Generic;
-public class PlanetSmash : MonoBehaviour
+public class PlayerCollisionHandler : MonoBehaviour
 {
     public TextMeshProUGUI planetsSmashedLabel; // Reference to the UI Text element that displays the number of smashed planets
     public TextMeshProUGUI planetsSmashedDeathLabel;
@@ -10,6 +10,7 @@ public class PlanetSmash : MonoBehaviour
     private Vector3 position;
     private int highestScore;
     AudioManager audioManager;
+    public Attraction attraction;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -31,8 +32,21 @@ public class PlanetSmash : MonoBehaviour
         }
     }
 
+
+    private void UpdatePlanetsSmashedLabel()
+    {
+        // Update the text of the label to show the current count
+        planetsSmashedLabel.text = "Planets Smashed: " + planetsSmashed;
+        planetsSmashedDeathLabel.text = "Planets Smashed: " + planetsSmashed;
+        playerHandler.SetFuel(100f, true);
+    }
+    public int GetPlanetsSmashed()
+    {
+        return planetsSmashed;
+    }
     private void OnCollisionEnter(Collision collision)
     {
+;        Debug.Log(collision.gameObject);
         // Check if the collided object is a planet
         if (collision.gameObject.CompareTag("Planet"))
         {
@@ -47,21 +61,10 @@ public class PlanetSmash : MonoBehaviour
             GameObject clone = Instantiate(explosion, position, Quaternion.identity);// as GameObject;
             Destroy(clone, 5);
         }
-        else
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
-
+            Debug.Log("Player died");
+            attraction.Die();
         }
-    }
-
-    private void UpdatePlanetsSmashedLabel()
-    {
-        // Update the text of the label to show the current count
-        planetsSmashedLabel.text = "Planets Smashed: " + planetsSmashed;
-        planetsSmashedDeathLabel.text = "Planets Smashed: " + planetsSmashed;
-        playerHandler.SetFuel(100f, true);
-    }
-    public int GetPlanetsSmashed()
-    {
-        return planetsSmashed;
     }
 }

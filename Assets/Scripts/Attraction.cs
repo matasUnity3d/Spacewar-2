@@ -17,7 +17,7 @@ public class Attraction : MonoBehaviour
 
     [SerializeField]
     public PlayerHandler playerHandler;
-    public PlanetSmash planetSmash;
+    public PlayerCollisionHandler planetSmash;
     AudioManager audioManager;
     private void Awake()
     {
@@ -63,7 +63,7 @@ public class Attraction : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         
         if (!died)

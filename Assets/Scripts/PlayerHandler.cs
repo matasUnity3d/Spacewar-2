@@ -95,23 +95,47 @@ public class PlayerHandler : MonoBehaviour
         CheckMapBorders();
     }
 
-    void CheckMapBorders()
+void CheckMapBorders()
+{
+    Vector3 position = transform.position;
+
+    // Check if the player is outside the map boundaries
+    if (position.x < mapCenter.x - mapDimensions.x / 2)
     {
-        Vector3 position = transform.position;
-
-        // Check if the player is outside the map boundaries
-        if (position.x < mapCenter.x - mapDimensions.x / 2) position.x = mapCenter.x + mapDimensions.x / 2;
-        else if (position.x > mapCenter.x + mapDimensions.x / 2) position.x = mapCenter.x - mapDimensions.x / 2;
-
-        if (position.y < mapCenter.y - mapDimensions.y / 2) position.y = mapCenter.y + mapDimensions.y / 2;
-        else if (position.y > mapCenter.y + mapDimensions.y / 2) position.y = mapCenter.y - mapDimensions.y / 2;
-
-        if (position.z < mapCenter.z - mapDimensions.z / 2) position.z = mapCenter.z + mapDimensions.z / 2;
-        else if (position.z > mapCenter.z + mapDimensions.z / 2) position.z = mapCenter.z - mapDimensions.z / 2;
-
-        // Update the player's position
-        transform.position = position;
+        position.x = mapCenter.x + mapDimensions.x / 2;
+        yaw += 180;
     }
+    else if (position.x > mapCenter.x + mapDimensions.x / 2)
+    {
+        position.x = mapCenter.x - mapDimensions.x / 2;
+        yaw += 180;
+    }
+
+    if (position.y < mapCenter.y - mapDimensions.y / 2)
+    {
+        position.y = mapCenter.y + mapDimensions.y / 2;
+        yaw += 180;
+    }
+    else if (position.y > mapCenter.y + mapDimensions.y / 2)
+    {
+        position.y = mapCenter.y - mapDimensions.y / 2;
+        yaw += 180;
+    }
+
+    if (position.z < mapCenter.z - mapDimensions.z / 2)
+    {
+        position.z = mapCenter.z + mapDimensions.z / 2;
+        yaw += 180;
+    }
+    else if (position.z > mapCenter.z + mapDimensions.z / 2)
+    {
+        position.z = mapCenter.z - mapDimensions.z / 2;
+        yaw += 180;
+    }
+
+    // Update the player's position
+    transform.position = position;
+}
 
     public void SetHasFuel(bool fuel)
     {

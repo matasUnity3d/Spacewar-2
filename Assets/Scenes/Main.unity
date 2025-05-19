@@ -36246,6 +36246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetsSmashedLabel: {fileID: 1427066530}
   planetsSmashedDeathLabel: {fileID: 1932253537}
+  attraction: {fileID: 1892105829}
   explosion: {fileID: 8715579644212938800, guid: 5f290af3d65c44fe0beb059d6c1d199b, type: 3}
   playerHandler: {fileID: 1511663291}
 --- !u!1 &1541046595

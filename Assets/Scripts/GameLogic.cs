@@ -21,7 +21,6 @@ public class GameLogic : MonoBehaviour
         Physics.gravity = Vector3.zero;
         playerCamera = Camera.main;
         SpawnPlanets();
-        SpawnEnemies();
         StartCoroutine(CheckAndSpawnPlanets());
     }
 
@@ -64,6 +63,7 @@ public class GameLogic : MonoBehaviour
 
     void SpawnPlanets()
     {
+        SpawnEnemies();
         for (int i = 0; i < numberOfPlanets; i++)
         {
             Vector3 randomDirection = Random.onUnitSphere * spawnDistance;
