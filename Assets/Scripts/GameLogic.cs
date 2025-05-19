@@ -36,7 +36,7 @@ public class PlanetSpawner : MonoBehaviour
             SpawnPlanets();
         }
     }
-        bool AreAnyPlanetsVisible()
+    bool AreAnyPlanetsVisible()
     {
         // Get the planes of the camera's frustum
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(playerCamera);
