@@ -8,6 +8,7 @@ TagManager:
   - Planet
   - Audio
   - Enemy
+  - SecondaryCamera
   layers:
   - Default
   - TransparentFX

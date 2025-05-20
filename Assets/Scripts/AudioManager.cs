@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip FuelUp;
     public AudioClip Boost;
     public AudioClip Music;
+    public AudioClip Lazer;
 
     private void Start()
     {

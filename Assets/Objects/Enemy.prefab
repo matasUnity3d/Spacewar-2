@@ -24291,37 +24291,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1 &5354586040880445135
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 143815017503761690}
-  m_Layer: 0
-  m_Name: FirePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &143815017503761690
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5354586040880445135}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.0000004917383, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.41, z: 3.27}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8641352308998505556}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5586497006962883569
 GameObject:
   m_ObjectHideFlags: 0
@@ -34001,7 +33970,6 @@ GameObject:
   - component: {fileID: 6011605730689045650}
   - component: {fileID: 1520620105779722905}
   - component: {fileID: 4908835113432693586}
-  - component: {fileID: 5358162225312524807}
   m_Layer: 0
   m_Name: Spaceship
   m_TagString: Player
@@ -34030,7 +33998,6 @@ Transform:
   - {fileID: 5166984340607265429}
   - {fileID: 392224120290002504}
   - {fileID: 162368964970194147}
-  - {fileID: 143815017503761690}
   m_Father: {fileID: 2720932100923384863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5340876393076295193
@@ -34215,23 +34182,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &5358162225312524807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6820140569379148416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10a63b93a30c64f81bbde4e533a3f389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  laserOrigin: {fileID: 143815017503761690}
-  gunRange: 5000
-  fireRate: 1
-  laserDuration: 0.2
 --- !u!1 &8298510493598682593
 GameObject:
   m_ObjectHideFlags: 0
