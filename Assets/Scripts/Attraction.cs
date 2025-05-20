@@ -72,6 +72,8 @@ public class Attraction : MonoBehaviour
         
         if (!died)
         {
+            Debug.Log("Death");
+            died = true;
             audioManager.PlaySFX(audioManager.Death);
             int savedHighScore = PlayerPrefs.GetInt("HighScore");
             int planetSmashLocal = planetSmash.GetPlanetsSmashed();
@@ -96,7 +98,6 @@ public class Attraction : MonoBehaviour
             position = player.transform.position;
             player.SetActive(false);
             playerHandler.SetHasFuel(false);
-            died = true;
         }
     }
 }

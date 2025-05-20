@@ -43,7 +43,8 @@ public class PlanetSmash : MonoBehaviour
             UpdatePlanetsSmashedLabel();
             position = collision.gameObject.transform.position;
             // Destroy the planet
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<SphereCollider>().enabled = false;
+            Destroy(collision.gameObject, 1);
             GameObject clone = Instantiate(explosion, position, Quaternion.identity);// as GameObject;
             Destroy(clone, 5);
         }

@@ -77,13 +77,11 @@ public class PlayerHandler : MonoBehaviour
             float VelocityX = Input.GetAxis("Horizontal");
             float VelocityY = Input.GetKey(KeyCode.LeftShift) ? 1f : Input.GetKey(KeyCode.LeftControl) ? -1f : 0f;
             float VelocityZ = Input.GetAxis("Vertical");
-            SetMovement(VelocityX, VelocityY, VelocityZ);
-
-            moving = IsAnyMovementKeyPressed();
-            if (moving)
-            {
-                //audioManager.PlaySFX(audioManager.Boost);
-            }
+            Vector3 movementVector = new Vector3(VelocityX, VelocityY, VelocityZ);
+            SetMovement(movementVector);
+            
+            moving = movementVector.magnitude > 0;
+            audioManager.PlayThrusters(moving);
         }
         else
         {
@@ -91,7 +89,7 @@ public class PlayerHandler : MonoBehaviour
             Debug.Log("Death");
             moving = false;
             DisableEmissions();
-            SetMovement(0, 0, 0);
+            SetMovement(Vector3.zero);
         }
         // Check for map borders
         CheckMapBorders();
@@ -127,8 +125,10 @@ public class PlayerHandler : MonoBehaviour
     void SetEmission(KeyCode key, ParticleSystem particleSystem)
     {
         var emission = particleSystem.emission;
-        if (Input.GetKeyDown(key)){
-            if(key == KeyCode.W){
+        if (Input.GetKeyDown(key))
+        {
+            if (key == KeyCode.W)
+            {
                 fov = 115f;
                 timeWarp.enableEmission = true;
             }
@@ -170,14 +170,9 @@ public class PlayerHandler : MonoBehaviour
         up.enableEmission = false;
     }
 
-    public void SetMovement(float x, float y, float z){
-        Vector3 ForceDirection = transform.TransformDirection(new Vector3(x, y, z) * multiplier);
+    public void SetMovement(Vector3 movementVector){
+        Vector3 ForceDirection = transform.TransformDirection(movementVector * multiplier);
         Force.force = ForceDirection;
-    }
-    bool IsAnyMovementKeyPressed()
-    {
-        return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || 
-            Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftShift);
     }
     void TimeWarp()
     {
