@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 public class Attraction : MonoBehaviour
 {
     public GameObject player; // Reference to the player
@@ -20,6 +22,7 @@ public class Attraction : MonoBehaviour
     [SerializeField]
     public PlayerHandler playerHandler;
     public PlanetSmash planetSmash;
+    public RaycastGun rayCastGun;
     AudioManager audioManager;
     private void Awake()
     {
@@ -67,7 +70,7 @@ public class Attraction : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         
         if (!died)
@@ -76,6 +79,8 @@ public class Attraction : MonoBehaviour
             died = true;
             audioManager.PlaySFX(audioManager.Death);
             int savedHighScore = PlayerPrefs.GetInt("HighScore");
+            int savedHighScoreKills = PlayerPrefs.GetInt("HighScoreKills");
+            int enemiesDestroyed = rayCastGun.GetKills();
             int planetSmashLocal = planetSmash.GetPlanetsSmashed();
             if (savedHighScore < planetSmashLocal)
             {
@@ -85,6 +90,15 @@ public class Attraction : MonoBehaviour
             else
             {
                 HighScoreLabel.text = "HighScore: " + savedHighScore;
+            }
+            if (savedHighScoreKills < enemiesDestroyed)
+            {
+                HighScoreLabel.text = "NEW Kill record: " + enemiesDestroyed;
+                PlayerPrefs.SetInt("HighScoreKills", enemiesDestroyed);
+            }
+            else
+            {
+                HighScoreLabel.text = "HighScore: " + savedHighScoreKills;
             }
             mainUI.enabled = false;
             deathScreen.enabled = true;

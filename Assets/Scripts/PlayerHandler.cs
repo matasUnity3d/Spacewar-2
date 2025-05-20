@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using TMPro;
 public class PlayerHandler : MonoBehaviour
 {
     public float multiplier = 10f;
@@ -20,6 +20,7 @@ public class PlayerHandler : MonoBehaviour
     public bool moving = false;
     public Camera myCamera;
     private bool hasFuel = true;
+    public Attraction attraction;
     [SerializeField]
     private FuelUI fuel;
     private float yaw; // Yaw rotation based on mouse movement
@@ -27,9 +28,11 @@ public class PlayerHandler : MonoBehaviour
     public float pitchLimit = 360f; // Limit for pitch rotation
     private float fov = 90;
     private float t = 0.5f;
+    private bool death = false;
     // Define the map boundaries
     public Vector3 mapCenter = Vector3.zero; // Center of the map
     public Vector3 mapDimensions = new Vector3(1000f, 1000f, 1000f); // Size of the map
+    public TextMeshProUGUI perished;
     AudioManager audioManager;
     private void Awake()
     {
@@ -79,7 +82,7 @@ public class PlayerHandler : MonoBehaviour
             float VelocityZ = Input.GetAxis("Vertical");
             Vector3 movementVector = new Vector3(VelocityX, VelocityY, VelocityZ);
             SetMovement(movementVector);
-            
+
             moving = movementVector.magnitude > 0;
             audioManager.PlayThrusters(moving);
         }
@@ -90,6 +93,12 @@ public class PlayerHandler : MonoBehaviour
             moving = false;
             DisableEmissions();
             SetMovement(Vector3.zero);
+            if (!death)
+            {
+                perished.text = "You have ran out of fuel\nPress space to continue";
+                death = true;
+                attraction.Die();
+            }
         }
         // Check for map borders
         CheckMapBorders();

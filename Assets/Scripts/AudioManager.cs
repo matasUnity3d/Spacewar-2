@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip Music;
     public AudioClip Lazer;
     public AudioClip Thruster;
-
+    public AudioClip Destroyed;
     private void Start()
     {
         musicSource.clip = Music;
