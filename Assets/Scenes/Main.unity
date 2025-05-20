@@ -149,7 +149,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.123
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 448226385}
   m_Layer: 0
   m_Name: DeathCamera
-  m_TagString: Untagged
+  m_TagString: SecondaryCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5807,6 +5807,7 @@ MonoBehaviour:
   FuelUp: {fileID: 8300000, guid: f6a663ac6b6d54487ad439fe2789db55, type: 3}
   Boost: {fileID: 8300000, guid: 7589eedd6ca8e417581a5eafca2b2463, type: 3}
   Music: {fileID: 8300000, guid: bc2f11e8dbd9a41349cc98a5666885ee, type: 3}
+  Lazer: {fileID: 8300000, guid: 0ae9be0b6793f48a8b2fa89f13dcfd40, type: 3}
 --- !u!4 &830290684
 Transform:
   m_ObjectHideFlags: 0
@@ -11084,11 +11085,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a63b93a30c64f81bbde4e533a3f389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 963194227}
+  FirePoint: {fileID: 1223959411}
   laserOrigin: {fileID: 1223959412}
   gunRange: 5000
-  fireRate: 1
-  laserDuration: 0.2
+  laserDuration: 0.1
 --- !u!120 &1260812608
 LineRenderer:
   serializedVersion: 2

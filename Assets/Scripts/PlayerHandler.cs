@@ -88,6 +88,7 @@ public class PlayerHandler : MonoBehaviour
         else
         {
             audioManager.PlaySFX(audioManager.FuelUp);
+            Debug.Log("Death");
             moving = false;
             DisableEmissions();
             SetMovement(0, 0, 0);
@@ -144,7 +145,6 @@ public class PlayerHandler : MonoBehaviour
     // Update is needed because you can collide with planets without boosting, thus not updating the fuel
     // Only Planet smasher calls this with true
     public void SetFuel(float fuelChange, bool update){
-        Debug.Log("Fuel before: " + Fuel);
         if(moving || update){
             if((fuelChange + Fuel) >= MaxFuel){
                 Fuel=MaxFuel;
@@ -159,7 +159,6 @@ public class PlayerHandler : MonoBehaviour
         if(Fuel <= 0){
             hasFuel = false;
         }
-        Debug.Log("Fuel after: " + Fuel);
     }
     void DisableEmissions(){
         timeWarp.enableEmission = false;
