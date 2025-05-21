@@ -32,7 +32,6 @@ public class PlayerHandler : MonoBehaviour
     // Define the map boundaries
     public Vector3 mapCenter = Vector3.zero; // Center of the map
     public Vector3 mapDimensions = new Vector3(1000f, 1000f, 1000f); // Size of the map
-    public TextMeshProUGUI perished;
     AudioManager audioManager;
     private void Awake()
     {
@@ -95,9 +94,8 @@ public class PlayerHandler : MonoBehaviour
             SetMovement(Vector3.zero);
             if (!death)
             {
-                perished.text = "You have ran out of fuel\nPress space to continue";
                 death = true;
-                attraction.Die();
+                attraction.Die("You have ran out of fuel!");
             }
         }
         // Check for map borders
@@ -165,9 +163,7 @@ public class PlayerHandler : MonoBehaviour
             Debug.Log("Moving");
             fuel.SetFuel(Fuel);
         }
-        if(Fuel <= 0){
-            hasFuel = false;
-        }
+        hasFuel = Fuel > 0;
     }
     void DisableEmissions(){
         timeWarp.enableEmission = false;

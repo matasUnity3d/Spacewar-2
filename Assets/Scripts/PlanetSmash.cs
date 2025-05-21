@@ -17,6 +17,8 @@ public class PlanetSmash : MonoBehaviour
     public GameObject explosion;
     [SerializeField]
     public PlayerHandler playerHandler;
+    public float planetFuelGain = 0f;
+
     private void Start()
     {
         // Initialize the label
@@ -59,7 +61,7 @@ public class PlanetSmash : MonoBehaviour
         // Update the text of the label to show the current count
         planetsSmashedLabel.text = "Planets Smashed: " + planetsSmashed;
         planetsSmashedDeathLabel.text = "Planets Smashed: " + planetsSmashed;
-        playerHandler.SetFuel(100f, true);
+        playerHandler.SetFuel(planetFuelGain, true);
     }
     public int GetPlanetsSmashed()
     {

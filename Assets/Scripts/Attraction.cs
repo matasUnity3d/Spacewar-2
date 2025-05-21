@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 public class Attraction : MonoBehaviour
 {
     public GameObject player; // Reference to the player
@@ -12,7 +13,9 @@ public class Attraction : MonoBehaviour
     public Canvas deathScreen;
     public Canvas mainUI;
     private GameObject fighter;
-    public TextMeshProUGUI HighScoreLabel;
+    public TextMeshProUGUI perished;
+    public TextMeshProUGUI PlanetHighScoreLabel;
+    public TextMeshProUGUI KillHighScoreLabel;
     public float baseAttractionForce = 100000f; // Base force of attraction
     public float deathDistance = 1f; // Distance at which the player dies
     public Camera mainCamera;
@@ -58,7 +61,7 @@ public class Attraction : MonoBehaviour
             // Check for death condition
             if (distance < deathDistance)
             {
-                Die();
+                Die("The sun has swallowed you!");
             }
         }
         else
@@ -70,12 +73,14 @@ public class Attraction : MonoBehaviour
         }
     }
 
-    public void Die()
+    public void Die(String Reason = "You have perished!")
     {
         
         if (!died)
         {
             Debug.Log("Death");
+            
+            perished.text = Reason + "\nPress space to continue";
             died = true;
             audioManager.PlaySFX(audioManager.Death);
             int savedHighScore = PlayerPrefs.GetInt("HighScore");
@@ -84,21 +89,21 @@ public class Attraction : MonoBehaviour
             int planetSmashLocal = planetSmash.GetPlanetsSmashed();
             if (savedHighScore < planetSmashLocal)
             {
-                HighScoreLabel.text = "NEW HighScore: " + planetSmashLocal;
+                PlanetHighScoreLabel.text = "NEW Planet High Score: " + planetSmashLocal;
                 PlayerPrefs.SetInt("HighScore", planetSmashLocal);
             }
             else
             {
-                HighScoreLabel.text = "HighScore: " + savedHighScore;
+                PlanetHighScoreLabel.text = "Planet High Score: " + savedHighScore;
             }
             if (savedHighScoreKills < enemiesDestroyed)
             {
-                HighScoreLabel.text = "NEW Kill record: " + enemiesDestroyed;
+                KillHighScoreLabel.text = "NEW Kill Record: " + enemiesDestroyed;
                 PlayerPrefs.SetInt("HighScoreKills", enemiesDestroyed);
             }
             else
             {
-                HighScoreLabel.text = "HighScore: " + savedHighScoreKills;
+                KillHighScoreLabel.text = "Kill High Score: " + savedHighScoreKills;
             }
             mainUI.enabled = false;
             deathScreen.enabled = true;
