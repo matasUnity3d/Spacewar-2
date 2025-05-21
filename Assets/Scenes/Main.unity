@@ -36264,9 +36264,9 @@ MonoBehaviour:
   yawLeft: {fileID: 1432644481}
   yawRight: {fileID: 1323795892}
   timeWarp: {fileID: 1472268782}
-  Fuel: 350
-  MaxFuel: 350
-  fuelDrain: -10
+  Fuel: 600
+  MaxFuel: 600
+  fuelDrain: -3
   moving: 0
   myCamera: {fileID: 963194227}
   attraction: {fileID: 1892105829}
